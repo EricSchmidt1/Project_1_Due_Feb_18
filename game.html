@@ -11,6 +11,7 @@
          var takeItem = 0;
          var MAX_SCORE = 60;
          var personalScore = 0;
+         
          Locale[0] = "Playground";
          Locale[1] = "Abandoned Mansion";
          Locale[2] = "The School";
@@ -20,6 +21,17 @@
          Locale[6] = "Graveyard";
          Locale[7] = "Rundown Diner";
          Locale = 0;
+         
+         var Identify = new Array()
+         
+         Identify[0] = Locale[0];
+         Identify[1] = Locale[1];
+         Identify[2] = Locale[2];
+         Identify[3] = Locale[3];
+         Identify[4] = Locale[4];
+         Identify[5] = Locale[5];
+         Identify[6] = Locale[6];
+         Identify[7] = Locale[7];
          
          var areaVisited = new Array(7);
          for(i=0; i<= 7; i++){
@@ -32,6 +44,55 @@
          }
           
 		 function updateDisplay() {
+		 
+      details = new Array();
+         
+      details[0] = new Identify(0);
+      details[0].name = "Playground";
+      details[0].desc = "Playground that used to be used by the neighborhood kids.";
+         
+      details[1] = new Identify(1);
+      details[1].name = "Abandoned Mansion";
+      details[1].desc = "House that used to belong to the wealthy family down the road.";
+         
+      details[2] = new Identify(2);
+      details[2].name = "The School";
+      details[2].desc = "School that once was attended by every child.";
+         
+      details[3] = new Identify(3);
+      details[3].name = "Playground";
+      details[3].desc = "Playground that used to be used by the neighborhood kids.";
+         
+      details[4] = new Identify(4);
+      details[4].name = "Worn-out Fountain";
+      details[4].desc = "Once the most beatiful spot in the town.";
+         
+      details[5] = new Identify(5);
+      details[5].name = "The Forest";
+      details[5].desc = "Nearby woods that few ever entered.";
+         
+      details[6] = new Identify(6);
+      details[6].name = "Graveyard";
+      details[6].desc = "Just your ordinary neighborhood graveyard.";
+         
+      details[7] = new Identify(7);
+      details[7].name = "Rundown Diner";
+      details[7].desc = "Used to serve the best pancakes in the whole town.";
+         
+      function Identify(id){
+        this.id = id;
+        
+        this.name = "";
+        this.desc = "";
+        
+        this.toString = function(){
+          return "You have have entered " + this.name + "(Location ID: " + this.id + ")" +"<br>" + this.desc;
+        }
+      }
+        
+         
+         
+         
       switch (Locale) {
         case 0: playground();
         break;
