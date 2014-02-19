@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <title>Simple Game</title>
+      
+	  <script>
+	 
+         // Global Variables
+         var Locale = new Array(7);
+         var takeItem = 0;
+         var MAX_SCORE = 60;
+         var personalScore = 0;
+         Locale[0] = "Playground";
+         Locale[1] = "Abandoned Mansion";
+         Locale[2] = "The School";
+         Locale[3] = "Worn-out Fountain";
+         Locale[4] = "The Park";
+         Locale[5] = "The Forest";
+         Locale[6] = "Graveyard";
+         Locale[7] = "Rundown Diner";
+         Locale = 0;
+         
+         var areaVisited = new Array(7);
+         for(i=0; i<= 7; i++){
+          areaVisited[i] = false;
+         }
+         
+         var itemCollected = new Array(3);
+         for(i=0; i <= 3; i++){
+          itemCollected[i] = false;
+         }
+          
+		 function updateDisplay() {
+      switch (Locale) {
+        case 0: playground();
+        break;
+        case 1: mansion();
+        break;
+        case 2: school();
+        break;
+        case 3: fountain();
+        break;
+        case 4: park();
+        break;
+        case 5: forest();
+        break;
+        case 6: graveyard();
+        break;
+        case 7: diner();
+        break;
+        default : document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+          "<br>currentLocal matches no cases";
+        }
+      }
+      
+      function playground(){
+        if(areaVisited[0] == false){
+          personalScore = personalScore + 5;
+          takeItem = 1;
+          areaVisited[0] = true;
+        }
+        else
+          alreadyVisited();      
+        
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + "<br>You are in the playground.";
+      }
+      
+      function mansion(){
+        if(areaVisited[1] == false){
+          personalScore = personalScore + 5;
+          areaVisited[1] = true;
+        }
+        else
+          alreadyVisited();
+        
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + "<br>You are in the mansion.";
+      }
+      
+      function school(){
+        if(areaVisited[2] == false){
+          personalScore = personalScore + 5;
+          takeItem = 2;
+          areaVisited[2] = true;
+        }
+        else
+          alreadyVisited();
+          
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + "<br>You are in the school.";
+        
+        if(itemCollected[1] == false){
+          document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + " You see a wrench stuck between the door.";
+        }
+      }
+      
+      function fountain(){
+        if(areaVisited[3] == false){
+          personalScore = personalScore + 5;
+          areaVisited[3] = true;
+        }
+        else
+          alreadyVisited();
+          
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + "<br>You are in the fountain.";
+      }
+      
+      function park(){
+        if(areaVisited[4] == false){
+          personalScore = personalScore + 5;
+          takeItem = 3;
+          areaVisited[4] = true;
+        }
+        else
+          alreadyVisited();
+        
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + "<br>You are in the park.";
+        
+        if(itemCollected[2] == false){
+          document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + " An axe is stuck inside of a nearby tree.";
+        }
+      }
+      
+      function forest(){
+        if(areaVisited[5] == false){
+          personalScore = personalScore + 5;
+          areaVisited[5] = true;
+        }
+        else
+          alreadyVisited();
+          
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + "<br>You are in the forest.";
+      }
+      
+      function graveyard(){
+        if(areaVisited[6] == false){
+          personalScore = personalScore + 5;
+          takeItem = 4;
+          areaVisited[6] = true;
+        }
+        else
+          alreadyVisited();
+          
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + "<br>You are in the graveyard.";
+        
+        if(itemCollected[3] == false){
+          document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + " A rusty shovel lays next to an old gravestone.";
+        }
+      }
+      
+      function diner(){
+        if(areaVisited[7] == false){
+          personalScore = personalScore + 5;
+          areaVisited[7] = true;
+        }
+        else
+          alreadyVisited();
+          
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + "<br>You are in the diner.";
+      }
+       
+      
+      function alreadyVisited(){
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+          "<br>You already visited this location.";
+      }
+        
+      
+                      /*N, S, E, W*/
+		 var nav = 			[	[-1, 4, 1,-1], //Playground Directions
+                      [-1, 5, 2, 0], //Abandoned Mansion Directions
+                      [-1, 6, 3, 1], //The School Directions
+                      [-1, 7,-1, 2], //Worn-out Fountain Directions
+                      [ 0,-1, 5,-1], //The Park Directions
+                      [ 1,-1, 6, 4], //The Forest Directions
+                      [ 2,-1, 7, 5], //Graveyard Directions
+                      [ 3,-1,-1, 6]] //Rundown Diner Directions
+							 
+     function roundScore(){
+      return Math.round((personalScore/MAX_SCORE)*100);
+     }
+		
+     function goFunction(){
+     var inputValue = document.getElementById('inputValue').value;
+      if(inputValue.toUpperCase() == 'NORTH' || inputValue.toUpperCase() == 'N'){
+        buttonnav('north');
+      }
+      
+      if(inputValue.toUpperCase() == 'SOUTH' || inputValue.toUpperCase() == 'S'){
+        buttonnav('south');
+      }
+      
+      if(inputValue.toUpperCase() == 'EAST' || inputValue.toUpperCase() == 'E'){
+        buttonnav('east');
+      }
+      
+      if(inputValue.toUpperCase() == 'WEST' || inputValue.toUpperCase() == 'W'){
+        buttonnav('west');
+      }
+      
+      if(inputValue.toUpperCase() == 'HELP' || inputValue.toUpperCase() == 'H'){
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + 
+          "<br>For directions type south or s to go south, north or n to go north, east or e to go east, west or w to go west. " + 
+          "You can also type help or h for this information to be repeated. You can type quit or q to quit the game. You can type inventory or i to see what items you have collected. ";
+      } 
+      
+      if(inputValue.toUpperCase() == 'TAKE' || inputValue.toUpperCase() == 'T'){
+        if(takeItem == 0){
+          document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+            "<br>There are no items to take.";
+        }
+        
+       if(takeItem == 1){
+          if(itemCollected[0] == false){
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + 
+              "<br>You take the note under the slide and put it in your inventory.";
+            takeItem = 0;
+            itemCollected[0] = true;
+            personalScore = personalScore + 5;
+          }
+       }
+       
+       if(takeItem == 2){
+          if(itemCollected[1] == false){
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + 
+              "<br>You grab the wrench from between the doors and hear them slam shut. ";
+            takeItem = 0;
+            itemCollected[1] = true;
+            personalScore = personalScore + 5;
+          }
+       }
+       
+       if(takeItem == 3){
+          if(itemCollected[2] == false){
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + 
+              "<br>You managed to get the axe out of the tree after pulling for some time.";
+            takeItem = 0;
+            itemCollected[2] = true;
+            personalScore = personalScore + 5;
+          }
+       }
+       
+       if(takeItem == 4){
+          if(itemCollected[3] == false){
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + 
+              "<br>You take the shovel quickly walk away from the grave.";
+            takeItem = 0;
+            itemCollected[3] = true;
+            personalScore = personalScore + 5;
+          }
+       }
+     }
+       
+      
+      if(inputValue.toUpperCase() == 'INVENTORY' || inputValue.toUpperCase() == 'I'){
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+          "<br>Your inventory consists of "; 
+          if(itemCollected[0] == true){
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+            "The note from under the slide.";
+          }
+          if(itemCollected[1] == true){
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+            "The wrench from the school.";
+          }
+          if(itemCollected[2] == true){
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+            "The axe from the park.";
+          }
+          if(itemCollected[3] == true){
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+            "The shovel from the Graveyard.";
+          }
+      }
+      
+      if(inputValue.toUpperCase() == 'QUIT' || inputValue.toUpperCase() == 'Q'){
+        document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +
+          "<br>Your score was " + roundScore() + "% completed.";
+      }
+     }
+		
+		 function buttonnav(move) {
+			var dir = -1;
+            switch(move) {
+               case('north'):dir = 0;
+                  break;
+               case('south'):dir = 1;
+                  break;
+               case('east'): dir = 2;
+                  break;
+               case('west'): dir = 3;
+                  break;
+               default: document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML + 
+                  "<br>That is not a valid move. type H for help with directions.";
+            }
+		
+		if (dir > -1) {   // this will only run if there is a direction
+         var newLocation = nav[Locale][dir];
+         if (newLocation != -1) {
+            Locale = newLocation;
+            updateDisplay();
+         } 
+          else {
+            document.getElementById('storyText').innerHTML = document.getElementById('storyText').innerHTML +  "<br>You cannot travel that way";
+            }
+		
+      }
+		}
+	
+      </script>
+	  
+   </head>
+   <body onload="updateDisplay()">
+      <h2 style="text-align:center">Good Luck Exploring</h2>
+       <div id="textContainer" style="text-align:center;float:left;" height = 300 width = 500>
+        <p id="storyText">Welcome, you are at the playground, your map is below and type Help or H for other functions. At the playground you see a note under the slide. What do you want to do?</p>
+      <br>
+    
+    <input type="text" id="inputValue" size=20></input>
+    <input type="button" value="Go" onclick="goFunction();" />
+	<br>
+	<input type="button"
+             value = "North"
+             onclick="buttonnav('north');">
+      <input type="button"
+             value = "South"
+             onclick="buttonnav('south');">
+      <input type="button"
+             value = "East"
+             onclick="buttonnav('east');">
+      <input type="button"
+             value = "West"
+             onclick="buttonnav('west');">
+      <br>
+      <img id="map" src="Picture1.png" height=200 width=500> 
+	  
+	  
+   </body>
+</html>
